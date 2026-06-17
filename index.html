@@ -1,289 +1,453 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台大醫院教學部 | AI行政提升計畫問卷</title>
-    <!-- 使用 Tailwind CSS 打造現代感 UI -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide 圖示庫 -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
-        
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: #F9F7F2; /* 北歐米色底 */
-            color: #334155;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>會議時間意願調查 - 文青手繪版</title>
+  <!-- 引入溫暖、完整的繁體中文宋體（思源宋體），極具文青與活字印刷質感 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS (微調排版) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-color: #fdfcf8; /* 溫暖的米色再生紙底色 */
+      --primary-color: #55728f; /* 深文青灰藍色，更沉穩溫柔 */
+      --secondary-color: #8dae94; /* 柔和鼠尾草綠 (選取狀態) */
+      --text-color: #444444; /* 深炭灰，非純黑，閱讀更舒服 */
+      --busy-color: #e8e2d5; /* 溫暖的淺燕麥灰 (忙碌狀態) */
+      --border-color: #cbd5e1; /* 手繪鉛筆感的柔和邊框色 */
+    }
 
-        .nordic-card {
-            background: white;
-            border-radius: 1.5rem;
-            border: 1px solid #D1CDC7;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
+    body {
+      font-family: 'Noto Serif TC', "BiauKai", "Microsoft JhengHei", serif; /* 繁體中文文青專用字型組合 */
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA0IDQiPjxnIGZpbGwtcmVkaXJlY3Q9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PGcgZmlsbD0iI2UzZTBlMCIgZmlsbC1vcGFjaXR5PSIwLjUiPjxwYXRoIGQ9Ik0wIDBoMnYySDBWMHptMiAyaDJ2Mkg yVjJ6TTAgMmgydjJIMFoybTIgMGgyVjJIMlYwek0wIDBoNHY0SDBWMHoiLz48L2c+PC9nPjwvc3ZnPg=='); /* 模擬輕微紙張紋理 */
+    }
+    
+    /* 標題與按鈕專用：加強字距與文學感 */
+    h1, h2, .font-literary {
+      font-family: 'Noto Serif TC', "BiauKai", serif;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
 
-        .primary-green { color: #4A6741; }
-        .bg-primary-green { background-color: #4A6741; }
-        
-        .rating-btn {
-            transition: all 0.2s;
-        }
+    /* 文青手繪感卡片：使用稍微不規則的圓角，營造手作感 */
+    .hand-drawn-card {
+      background: #fff;
+      border: 2px solid #cfc7b9;
+      border-radius: 24px 20px 24px 18px; /* 有機不規則圓角 */
+      box-shadow: 6px 6px 0px rgba(207, 199, 185, 0.4); /* 手作感硬陰影 */
+      position: relative;
+    }
+    
+    /* 裝飾性手繪花草插圖 (簡約莫蘭迪色) */
+    .decoration-plant {
+      position: absolute;
+      bottom: -20px;
+      right: -15px;
+      width: 110px;
+      opacity: 0.75;
+      pointer-events: none; /* 防止遮擋按鈕點擊 */
+    }
 
-        .rating-btn.active {
-            background-color: #4A6741;
-            color: white;
-            border-color: #4A6741;
-            transform: scale(1.1);
-        }
+    /* 手繪感表格樣式 */
+    .calendar-table {
+      width: 100%;
+      border-collapse: separate; /* 讓格子之間有些微空隙，更具手工感 */
+      border-spacing: 3px; 
+      background: transparent;
+      table-layout: fixed;
+    }
+    .calendar-table th, .calendar-table td {
+      border: 1.5px solid #e2dacb; /* 仿鉛筆手繪粗細 */
+      text-align: center;
+      padding: 10px 4px;
+      font-size: 13.5px;
+      border-radius: 8px; /* 輕微圓角 */
+    }
+    .calendar-table th {
+      background-color: #f7f4eb;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    .time-col {
+      width: 85px;
+      font-weight: 700;
+      background-color: #f7f4eb;
+      color: #6b7280;
+    }
+    
+    /* 時間方格互動效果 (手繪筆觸感) */
+    .slot-cell {
+      position: relative;
+      cursor: pointer;
+      height: 44px;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+    .slot-cell input[type="checkbox"] {
+      display: none;
+    }
+    .slot-cell .slot-label {
+      display: block;
+      width: 100%;
+      height: 100%;
+      line-height: 40px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    
+    /* 狀態顏色：溫慢、乾淨的莫蘭迪色系 */
+    .slot-cell.available {
+      background-color: #ffffff;
+      color: var(--secondary-color);
+      border: 1.5px solid #e2dacb;
+    }
+    .slot-cell.available:hover {
+      background-color: #f3f7f4; /* 極淡的植物綠，溫柔的選取感 */
+      transform: translateY(-1px);
+      box-shadow: 0 2px 5px rgba(141, 174, 148, 0.15);
+    }
+    
+    /* 您的既有行程「忙碌」狀態 (柔焦溫暖) */
+    .slot-cell.busy {
+      background-color: var(--busy-color);
+      color: #8c8576;
+      cursor: not-allowed;
+      border: 1.5px solid #dfd8cb;
+    }
+    .slot-cell.busy .slot-label {
+      text-decoration: line-through;
+      text-decoration-color: #bfaea2;
+      opacity: 0.65;
+      font-weight: 400;
+    }
+    
+    /* 被主管勾選後的狀態 (手繪感的鼠尾草綠) */
+    .slot-cell.selected {
+      background-color: var(--secondary-color) !important;
+      color: #ffffff !important;
+      border: 2px solid #6c8a73 !important;
+      font-weight: 700;
+      transform: scale(0.97);
+    }
+    .slot-cell.selected:hover {
+      background-color: #7a9c81 !important;
+    }
+    
+    /* 文青風底線輸入框 */
+    input[type="text"] {
+      background-color: transparent;
+      border: none;
+      border-bottom: 2px dashed #cfc7b9; /* 虛線底線，更像手工筆記本 */
+      border-radius: 0;
+      padding: 10px 4px;
+      font-size: 16px;
+      font-family: 'Noto Serif TC', serif;
+      transition: all 0.3s;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-bottom: 2px solid var(--primary-color);
+      background-color: rgba(247, 244, 235, 0.3);
+    }
 
-        /* 讀取動畫 */
-        .loader {
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #4A6741;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
+    /* 文青手繪風按鈕 - 修正字體並提升質感 */
+    .btn-hand-drawn {
+      background-color: #ffffff;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+      font-family: 'Noto Serif TC', "BiauKai", serif;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      font-size: 16px;
+      padding: 12px 32px;
+      border-radius: 40px 35px 40px 38px; /* 有機感圓角按鈕 */
+      cursor: pointer;
+      box-shadow: 4px 4px 0px rgba(85, 114, 143, 0.15);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-hand-drawn:hover {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      transform: translate(1px, 1px);
+      box-shadow: 2px 2px 0px rgba(85, 114, 143, 0.15);
+    }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    /* 手機版自適應滾動 */
+    .table-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 10px;
+    }
+  </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-4 sm:p-10">
 
-    <div class="max-w-3xl mx-auto">
-        <!-- Header 區塊 -->
-        <header class="nordic-card p-8 mb-8 border-t-[10px] border-[#4A6741]">
-            <div class="flex items-center gap-2 mb-4">
-                <i data-lucide="book-open" class="w-5 h-5 primary-green"></i>
-                <span class="text-xs font-bold tracking-[0.2em] text-[#8C7A6B]">台大醫院教學部</span>
-            </div>
-            <h1 class="text-2xl md:text-3xl font-bold mb-4 text-slate-800 leading-snug">
-                【生成式AI製作電子書協助院內行政業務提升計畫】<br>
-                <span class="primary-green">會議調查與需求投票</span>
-            </h1>
-            <p class="text-[#8C7A6B] text-sm leading-relaxed">
-                本計畫旨在優化教學行政效率，請主管們填寫意願，並於會議時攜帶希望處理的「文本資料」，我們將與智慧醫療中心協作建模。
-            </p>
-        </header>
-
-        <!-- 表單開始 -->
-        <form id="surveyForm" class="space-y-6">
-            
-            <!-- A. 基本資料 -->
-            <section class="nordic-card p-8">
-                <div class="flex items-center gap-2 mb-6">
-                    <i data-lucide="user" class="w-5 h-5 primary-green"></i>
-                    <h2 class="text-lg font-bold primary-green">A. 基本資料</h2>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1 ml-1">您的姓名</label>
-                        <input type="text" name="name" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-1 focus:ring-[#4A6741] outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1 ml-1">服務單位</label>
-                        <input type="text" name="department" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-1 focus:ring-[#4A6741] outline-none">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-xs font-medium text-slate-400 mb-1 ml-1">職稱</label>
-                        <input type="text" name="title" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-1 focus:ring-[#4A6741] outline-none">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-xs font-medium text-slate-400 mb-1 ml-1">生成式 AI 使用經驗</label>
-                        <select name="aiExperience" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-1 focus:ring-[#4A6741] outline-none appearance-none">
-                            <option value="">請選擇次數</option>
-                            <option value="無">無</option>
-                            <option value="有，1 次">有，1 次</option>
-                            <option value="有，2–5 次">有，2–5 次</option>
-                            <option value="有，>5 次">有，>5 次</option>
-                        </select>
-                    </div>
-                </div>
-            </section>
-
-            <!-- B. 會議時間 -->
-            <section class="nordic-card p-8">
-                <div class="flex items-center gap-2 mb-4">
-                    <i data-lucide="calendar" class="w-5 h-5 primary-green"></i>
-                    <h2 class="text-lg font-bold primary-green">B. 會議時間選擇</h2>
-                </div>
-                <p class="text-xs text-slate-400 mb-6">地點：東址 3 樓教學部討論室一號（可複選所有方便的時間）</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <label class="flex items-center p-4 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                        <input type="checkbox" name="time" value="3/5(四)14:00" class="w-4 h-4 accent-[#4A6741] mr-3">
-                        <span class="text-sm">3/5 (四) 14:00-15:00</span>
-                    </label>
-                    <label class="flex items-center p-4 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                        <input type="checkbox" name="time" value="3/6(五)14:00" class="w-4 h-4 accent-[#4A6741] mr-3">
-                        <span class="text-sm">3/6 (五) 14:00-15:00</span>
-                    </label>
-                    <label class="flex items-center p-4 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                        <input type="checkbox" name="time" value="3/9(一)14:00" class="w-4 h-4 accent-[#4A6741] mr-3">
-                        <span class="text-sm">3/9 (一) 14:00-15:00</span>
-                    </label>
-                    <label class="flex items-center p-4 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                        <input type="checkbox" name="time" value="3/11(三)14:00" class="w-4 h-4 accent-[#4A6741] mr-3">
-                        <span class="text-sm">3/11 (三) 14:00-15:00</span>
-                    </label>
-                    <label class="flex items-center p-4 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                        <input type="checkbox" name="time" value="3/13(五)14:00" class="w-4 h-4 accent-[#4A6741] mr-3">
-                        <span class="text-sm">3/13 (五) 14:00-15:00</span>
-                    </label>
-                    <label class="flex items-center p-4 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                        <input type="checkbox" name="time" value="3/16(一)14:00" class="w-4 h-4 accent-[#4A6741] mr-3">
-                        <span class="text-sm">3/16 (一) 14:00-15:00</span>
-                    </label>
-                </div>
-            </section>
-
-            <!-- C. 需求類型 -->
-            <section class="nordic-card p-8">
-                <div class="flex items-center gap-2 mb-6">
-                    <i data-lucide="bar-chart-3" class="w-5 h-5 primary-green"></i>
-                    <h2 class="text-lg font-bold primary-green">C. 需求強度評估</h2>
-                </div>
-
-                <div class="space-y-10">
-                    <!-- Q1 -->
-                    <div>
-                        <p class="text-sm text-slate-600 mb-4">1. 大量理解文本的工具，製作清楚正確的摘要</p>
-                        <div class="flex justify-between max-w-xs mx-auto rating-group" data-target="need1">
-                            <button type="button" data-val="1" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">1</button>
-                            <button type="button" data-val="2" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">2</button>
-                            <button type="button" data-val="3" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs active">3</button>
-                            <button type="button" data-val="4" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">4</button>
-                            <button type="button" data-val="5" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">5</button>
-                        </div>
-                    </div>
-                    <!-- Q2 -->
-                    <div>
-                        <p class="text-sm text-slate-600 mb-4">2. 院內安全環境使用 AI，避免資料外洩</p>
-                        <div class="flex justify-between max-w-xs mx-auto rating-group" data-target="need2">
-                            <button type="button" data-val="1" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">1</button>
-                            <button type="button" data-val="2" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">2</button>
-                            <button type="button" data-val="3" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs active">3</button>
-                            <button type="button" data-val="4" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">4</button>
-                            <button type="button" data-val="5" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">5</button>
-                        </div>
-                    </div>
-                    <!-- Q3 -->
-                    <div>
-                        <p class="text-sm text-slate-600 mb-4">3. 將複雜文本轉成電子書或簡報</p>
-                        <div class="flex justify-between max-w-xs mx-auto rating-group" data-target="need3">
-                            <button type="button" data-val="1" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">1</button>
-                            <button type="button" data-val="2" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">2</button>
-                            <button type="button" data-val="3" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs active">3</button>
-                            <button type="button" data-val="4" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">4</button>
-                            <button type="button" data-val="5" class="rating-btn w-10 h-10 rounded-full border border-slate-200 text-xs">5</button>
-                        </div>
-                    </div>
-
-                    <div class="pt-4 border-t border-dashed border-slate-200">
-                        <label class="block text-sm font-medium text-slate-400 mb-2">4. 其他具體需求或建議</label>
-                        <textarea name="other" rows="3" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#4A6741] resize-none" placeholder="請填寫您的想法..."></textarea>
-                    </div>
-                </div>
-            </section>
-
-            <button type="submit" id="submitBtn" class="w-full bg-[#4A6741] text-white py-4 rounded-full font-bold shadow-lg hover:opacity-90 transition-all transform active:scale-95">
-                提交問卷回覆
-            </button>
-        </form>
-
-        <!-- 成功 Modal -->
-        <div id="successModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div class="bg-white p-10 rounded-3xl max-w-sm w-full text-center shadow-2xl">
-                <div class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i data-lucide="check" class="w-8 h-8 text-[#4A6741]"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-2">回覆已成功送出</h3>
-                <p class="text-slate-400 text-sm mb-8">感謝您的參與，會議確認後將會發送通知。</p>
-                <button onclick="location.reload()" class="w-full py-3 bg-[#4A6741] text-white rounded-full font-bold">返回問卷</button>
-            </div>
-        </div>
+  <div class="max-w-5xl mx-auto hand-drawn-card p-6 sm:p-10 my-4">
+    <!-- 頂部文青風標題區 -->
+    <div class="mb-10 text-center relative">
+      <!-- 簡約手繪小圖示 (咖啡杯與日曆) -->
+      <span class="text-4xl block mb-3 animate-bounce" style="animation-duration: 3s;">☕️ 📅</span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-wider mb-4 text-[#3e566e]">下週開會時間意願調查</h1>
+      <p class="text-gray-600 mt-2 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+        親愛的主管們，這是一份溫暖的時間協調。
+        請勾選您下週 <span class="font-bold border-b border-dashed border-[#55728f] text-[#3e566e] pb-0.5">6/22 (一) - 6/26 (五)</span> 方便撥冗出席的時段。
+        灰色「忙碌」為發起人已有行程，請於白色空檔中多選您方便的時間，系統將自動尋找大家的交集。
+      </p>
     </div>
 
-    <script>
-        // 初始化 Lucide 圖示
-        lucide.createIcons();
+    <!-- 模擬載入狀態 (文青簡約風) -->
+    <div id="loading" class="flex flex-col items-center justify-center p-16 text-gray-500">
+      <span class="text-4xl animate-pulse mb-4">🌱</span>
+      <p class="text-base font-medium tracking-widest">正在悄悄載入發起人的行事曆行程與空檔時段...</p>
+    </div>
 
-        // 評分按鈕互動邏輯
-        const ratings = { need1: 3, need2: 3, need3: 3 };
-        document.querySelectorAll('.rating-group').forEach(group => {
-            const btns = group.querySelectorAll('.rating-btn');
-            const target = group.dataset.target;
-            btns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    btns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    ratings[target] = btn.dataset.val;
-                });
-            });
-        });
+    <!-- 調查表單本體 -->
+    <form id="scheduleForm" class="hidden" onsubmit="submitForm(event)">
+      <!-- 個人資料輸入區 (紙上書寫感) -->
+      <div class="mb-10 bg-[#fbfaf6] p-6 rounded-2xl border border-[#e8e2d5] shadow-inner">
+        <label for="userName" class="block text-gray-700 font-bold text-lg mb-3 font-literary">
+          <span class="text-red-400 mr-1">*</span> 您的單位與職稱姓名：
+        </label>
+        <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <input type="text" id="userName" required 
+                 class="w-full max-w-lg" 
+                 placeholder="例如：研發處 林處長">
+          <div class="text-sm text-gray-500 bg-white px-4 py-2 rounded-lg border border-[#e2decb] flex items-center gap-2">
+            <span>✏️ 提示：本調查採複選，選越多時段越容易湊成會議。</span>
+          </div>
+        </div>
+      </div>
 
-        const form = document.getElementById('surveyForm');
-        const submitBtn = document.getElementById('submitBtn');
+      <!-- 月曆網格外容器 -->
+      <div class="table-container border border-gray-200 rounded-xl shadow-inner mb-8 bg-white">
+        <table class="calendar-table">
+          <thead>
+            <tr>
+              <th class="time-col">時段</th>
+              <th>週一 (6/22)</th>
+              <th>週二 (6/23)</th>
+              <th>週三 (6/24)</th>
+              <th>週四 (6/25)</th>
+              <th>週五 (6/26)</th>
+            </tr>
+          </thead>
+          <tbody id="calendarBody">
+            <!-- 由 JS 動態產生 -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 送出按鈕 -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-gray-100 pt-8">
+        <span class="text-sm text-gray-500 flex items-center gap-2">
+          <span>💡</span> 勾選完成後，請點擊右側按鈕以送出您的時間意願。
+        </span>
+        <button type="submit" class="w-full sm:w-auto btn-hand-drawn">
+          <span>送出時間回覆</span>
+          <span>✉️</span>
+        </button>
+      </div>
+    </form>
+    
+    <!-- 提交成功狀態 -->
+    <div id="successState" class="hidden p-12 text-center">
+      <div class="w-20 h-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-green-200">
+        <span class="text-4xl">✓</span>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-3 font-literary">提交成功！感謝您的撥冗填寫</h2>
+      <p class="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">您的可用時段已被溫柔地記錄。待所有主管填寫完畢，發起人將會盡快通知會議定案時間，祝您有美好的一天。</p>
+      <button type="button" onclick="resetPreview()" class="text-[#55728f] hover:text-[#3e566e] font-semibold underline text-sm transition-colors">
+        重新填寫（測試預覽）
+      </button>
+    </div>
+
+    <!-- 底部手繪花草插圖 (SVG base64) -->
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHview0aPSI5NSIgaGVpZ2h0PSI4NCIgdmlld0JveD0iMCAwIDk1IDg0Ij48cGF0aCBkPSiTTI4LjMsODBDMjIuMSw4MCwxNC4xLDc0LjksMTEuOSw2OS4zQzkuNCw2Mi43LDE0LjgsNTUsMjIsNTUuMmM4LjUsMC4yLDE0LjUsOC4yLDE0LjYsMTYuN0MzNi43LDc2LjcsMzMuNyw4MCwyOC4zLDgwek0yMS44LDU4LjdDMTguMSw1OC43LDEzLjksNjQsMTYuMSw2OS40QzE3LjksNzQuNCwyMyw3Ny44LDI3LjksNzcuOEMzMS40LDc3LjgsMzMuNSw3NSwzMy41LDcwLjVDMzMuNSw2NCwyNSw1OC43LDIxLjgsNTguN3pNMzYuOCw4MS4zQzMwLjMsODEuMywyNC43LDc3LjQsMjIuNSw3MS41QzE5LjksNjQuNywyNC42LDU3LDMyLjMsNTcuMkM0MC45LDU3LjMsNDcuNyw2NS44LDQ3LjgsNzUu2M0Ny45LDgwLjcsNDQuNyw4MS4zLDM2LjgsODEuM3pNMzIuNSw2MC45QzI4LjgsNjAuOSwyNS4zLDY2LjEsMjcuNiw3MS40Qz5LHN2Zz4=" alt="裝飾花草" class="decoration-plant">
+  </div>
+
+  <script>
+    // 模擬後端傳送的行事曆資料
+    const mockScheduleData = {
+      days: ['2026-06-22', '2026-06-23', '2026-06-24', '2026-06-25', '2026-06-26'],
+      slots: [
+        '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+        '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'
+      ],
+      scheduleData: {
+        '2026-06-22': {
+          '09:00': { isBusy: true }, '09:30': { isBusy: true },
+          '10:00': { isBusy: false }, '10:30': { isBusy: false },
+          '11:00': { isBusy: false }, '11:30': { isBusy: false },
+          '13:30': { isBusy: false }, '14:00': { isBusy: false },
+          '14:30': { isBusy: true }, '15:00': { isBusy: true },
+          '15:30': { isBusy: false }, '16:00': { isBusy: false },
+          '16:30': { isBusy: false }, '17:00': { isBusy: false }, '17:30': { isBusy: false }
+        },
+        '2026-06-23': {
+          '09:00': { isBusy: false }, '09:30': { isBusy: false },
+          '10:00': { isBusy: true }, '10:30': { isBusy: true }, '11:00': { isBusy: true },
+          '11:30': { isBusy: false },
+          '13:30': { isBusy: false }, '14:00': { isBusy: false },
+          '14:30': { isBusy: false }, '15:00': { isBusy: false },
+          '15:30': { isBusy: false }, '16:00': { isBusy: false },
+          '16:30': { isBusy: false }, '17:00': { isBusy: false }, '17:30': { isBusy: false }
+        },
+        '2026-06-24': {
+          '09:00': { isBusy: false }, '09:30': { isBusy: false },
+          '10:00': { isBusy: false }, '10:30': { isBusy: false },
+          '11:00': { isBusy: false }, '11:30': { isBusy: false },
+          '13:30': { isBusy: true }, '14:00': { isBusy: true }, '14:30': { isBusy: true },
+          '15:00': { isBusy: false }, '15:30': { isBusy: false },
+          '16:00': { isBusy: false }, '16:30': { isBusy: false },
+          '17:00': { isBusy: false }, '17:30': { isBusy: false }
+        },
+        '2026-06-25': {
+          '09:00': { isBusy: false }, '09:30': { isBusy: false },
+          '10:00': { isBusy: false }, '10:30': { isBusy: false },
+          '11:00': { isBusy: false }, '11:30': { isBusy: false },
+          '13:30': { isBusy: false }, '14:00': { isBusy: false },
+          '14:30': { isBusy: false }, '15:00': { isBusy: false },
+          '15:30': { isBusy: true }, '16:00': { isBusy: true }, '16:30': { isBusy: true },
+          '17:00': { isBusy: false }, '17:30': { isBusy: false }
+        },
+        '2026-06-26': {
+          '09:00': { isBusy: false }, '09:30': { isBusy: false },
+          '10:00': { isBusy: false }, '10:30': { isBusy: false },
+          '11:00': { isBusy: false }, '11:30': { isBusy: false },
+          '13:30': { isBusy: false }, '14:00': { isBusy: false },
+          '14:30': { isBusy: false }, '15:00': { isBusy: false },
+          '15:30': { isBusy: false }, '16:00': { isBusy: false },
+          '16:30': { isBusy: false }, '17:00': { isBusy: false }, '17:30': { isBusy: false }
+        }
+      }
+    };
+
+    // 自動環境偵測：若在 GAS 環境下，會自動與 API 對接；若在網頁編輯器預覽，會跑 Mock 數據！
+    window.onload = function() {
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        // 真實 GAS 雲端環境
+        google.script.run
+          .withSuccessHandler(renderCalendar)
+          .withFailureHandler(function(err) {
+            alert("載入失敗: " + err.message);
+          })
+          .getAvailableSlots();
+      } else {
+        // 本地 Preview / 編輯器預覽環境
+        setTimeout(function() {
+          renderCalendar(mockScheduleData);
+        }, 1000);
+      }
+    };
+
+    function renderCalendar(data) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('scheduleForm').style.display = 'block';
+      
+      var tbody = document.getElementById('calendarBody');
+      tbody.innerHTML = '';
+      
+      data.slots.forEach(function(slot) {
+        var tr = document.createElement('tr');
         
-        // 使用您最新的 GAS 部署網址
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbw4Gmuv_864Xt18AGKQoWgyEU0XrDzZZEUIvOET6HGNoPTSA7yaS71MneFD03bwF1Ga/exec';
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // 設定讀取狀態
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="loader"></span> 傳送中...';
-
-            const formData = new FormData(form);
-            const times = [];
-            form.querySelectorAll('input[name="time"]:checked').forEach(cb => times.push(cb.value));
-
-            // 構建傳送資料 (對應 Canvas 中 GAS 腳本的 rowData 順序)
-            const payload = {
-                timestamp: new Date().toLocaleString('zh-TW', { hour12: false }),
-                name: formData.get('name'),
-                department: formData.get('department'),
-                title: formData.get('title'),
-                aiExperience: formData.get('aiExperience'),
-                time: times.join(', '),
-                need1: ratings.need1,
-                need2: ratings.need2,
-                need3: ratings.need3,
-                other: formData.get('other')
-            };
-
-            try {
-                // 使用 fetch 發送到 GAS
-                // 註：GAS POST 在 mode: 'no-cors' 下回傳結果會是隱藏的，但資料能成功寫入
-                await fetch(GAS_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    cache: 'no-cache',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                // 顯示成功彈窗
-                document.getElementById('successModal').classList.remove('hidden');
-            } catch (err) {
-                console.error('Error:', err);
-                alert('傳送時發生預期外錯誤，請確認網路連線或聯絡資訊管理員。');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '提交問卷回覆';
-            }
+        // 左側時間欄
+        var tdTime = document.createElement('td');
+        tdTime.className = 'time-col';
+        tdTime.innerText = slot;
+        tr.appendChild(tdTime);
+        
+        // 週一至週五
+        data.days.forEach(function(day) {
+          var td = document.createElement('td');
+          var slotInfo = data.scheduleData[day][slot];
+          
+          if (slotInfo.isBusy) {
+            td.className = 'slot-cell busy';
+            td.innerHTML = '<span class="slot-label">忙碌</span>';
+          } else {
+            td.className = 'slot-cell available';
+            var checkboxId = day + '_' + slot;
+            td.innerHTML = `
+              <label class="slot-label" for="${checkboxId}">
+                <input type="checkbox" id="${checkboxId}" name="slots" value="${day} ${slot}" onclick="toggleCell(this)">
+                。
+              </label>
+            `;
+          }
+          tr.appendChild(td);
         });
-    </script>
+        
+        tbody.appendChild(tr);
+      });
+    }
+
+    function toggleCell(checkbox) {
+      var cell = checkbox.closest('.slot-cell');
+      if (checkbox.checked) {
+        cell.classList.add('selected');
+        cell.querySelector('.slot-label').innerHTML = `
+          <input type="checkbox" id="${checkbox.id}" name="slots" value="${checkbox.value}" checked onclick="toggleCell(this)">
+          ✓
+        `;
+      } else {
+        cell.classList.remove('selected');
+        cell.querySelector('.slot-label').innerHTML = `
+          <input type="checkbox" id="${checkbox.id}" name="slots" value="${checkbox.value}" onclick="toggleCell(this)">
+          。
+        `;
+      }
+    }
+
+    function submitForm(e) {
+      e.preventDefault();
+      var userName = document.getElementById('userName').value;
+      var checkboxes = document.querySelectorAll('input[name="slots"]:checked');
+      var selectedSlots = [];
+      
+      checkboxes.forEach(function(cb) {
+        selectedSlots.push(cb.value);
+      });
+      
+      if (selectedSlots.length === 0) {
+        alert('請溫柔地挑選至少一個您方便的空閒時段再送出唷！');
+        return;
+      }
+
+      // 如果在 GAS 雲端環境
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        document.getElementById('scheduleForm').style.display = 'none';
+        document.getElementById('loading').style.display = 'flex';
+        
+        google.script.run
+          .withSuccessHandler(function(response) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('successState').style.display = 'block';
+          })
+          .withFailureHandler(function(err) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('scheduleForm').style.display = 'block';
+            alert("提交失敗：" + err.message);
+          })
+          .processSubmission(userName, selectedSlots);
+      } else {
+        // 本地模擬送出
+        document.getElementById('scheduleForm').style.display = 'none';
+        document.getElementById('successState').style.display = 'block';
+      }
+    }
+
+    function resetPreview() {
+      document.getElementById('successState').style.display = 'none';
+      document.getElementById('userName').value = '';
+      renderCalendar(mockScheduleData);
+    }
+  </script>
 </body>
 </html>
