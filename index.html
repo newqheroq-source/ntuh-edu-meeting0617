@@ -3,68 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>會議時間意願調查 - 文青手繪版</title>
-  <!-- 引入溫暖、完整的繁體中文宋體（思源宋體），極具文青與活字印刷質感 -->
+  <title>會議時間意願調查 - 不克出席登記</title>
+  <!-- 引入溫暖、完整的繁體中文宋體（思源宋體） -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <!-- Tailwind CSS (微調排版) -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
       --bg-color: #fdfcf8; /* 溫暖的米色再生紙底色 */
-      --primary-color: #55728f; /* 深文青灰藍色，更沉穩溫柔 */
-      --secondary-color: #8dae94; /* 柔和鼠尾草綠 (選取狀態) */
-      --text-color: #444444; /* 深炭灰，非純黑，閱讀更舒服 */
-      --busy-color: #e8e2d5; /* 溫暖的淺燕麥灰 (忙碌狀態) */
+      --primary-color: #55728f; /* 深文青灰藍色 */
+      --secondary-color: #db9d8a; /* 溫柔莫蘭迪粉橘 (主管自己忙碌、無法出席的顏色) */
+      --text-color: #444444; /* 深炭灰 */
+      --busy-color: #e8e2d5; /* 溫暖的淺燕麥灰 (發起人原先就忙碌的顏色) */
       --border-color: #cbd5e1; /* 手繪鉛筆感的柔和邊框色 */
     }
 
     body {
-      font-family: 'Noto Serif TC', "BiauKai", "Microsoft JhengHei", serif; /* 繁體中文文青專用字型組合 */
+      font-family: 'Noto Serif TC', "BiauKai", "Microsoft JhengHei", serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA0IDQiPjxnIGZpbGwtcmVkaXJlY3Q9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PGcgZmlsbD0iI2UzZTBlMCIgZmlsbC1vcGFjaXR5PSIwLjUiPjxwYXRoIGQ9Ik0wIDBoMnYySDBWMHptMiAyaDJ2Mkg yVjJ6TTAgMmgydjJIMFoybTIgMGgyVjJIMlYwek0wIDBoNHY0SDBWMHoiLz48L2c+PC9nPjwvc3ZnPg=='); /* 模擬輕微紙張紋理 */
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA0IDQiPjxnIGZpbGwtcmVkaXJlY3Q9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PGcgZmlsbD0iI2UzZTBlMCIgZmlsbC1vcGFjaXR5PSIwLjUiPjxwYXRoIGQ9Ik0wIDBoMnYySDBWMHptMiAyaDJ2Mkg yVjJ6TTAgMmgydjJIMFoybTIgMGgyVjJIMlYwek0wIDBoNHY0SDBWMHoiLz48L2c+PC9nPjwvc3ZnPg==');
     }
     
-    /* 標題與按鈕專用：加強字距與文學感 */
     h1, h2, .font-literary {
       font-family: 'Noto Serif TC', "BiauKai", serif;
       font-weight: 700;
       letter-spacing: 0.05em;
     }
 
-    /* 文青手繪感卡片：使用稍微不規則的圓角，營造手作感 */
+    /* 文青手繪感卡片 */
     .hand-drawn-card {
       background: #fff;
       border: 2px solid #cfc7b9;
-      border-radius: 24px 20px 24px 18px; /* 有機不規則圓角 */
-      box-shadow: 6px 6px 0px rgba(207, 199, 185, 0.4); /* 手作感硬陰影 */
+      border-radius: 24px 20px 24px 18px;
+      box-shadow: 6px 6px 0px rgba(207, 199, 185, 0.4);
       position: relative;
     }
     
-    /* 裝飾性手繪花草插圖 (簡約莫蘭迪色) */
     .decoration-plant {
       position: absolute;
       bottom: -20px;
       right: -15px;
       width: 110px;
       opacity: 0.75;
-      pointer-events: none; /* 防止遮擋按鈕點擊 */
+      pointer-events: none;
     }
 
     /* 手繪感表格樣式 */
     .calendar-table {
       width: 100%;
-      border-collapse: separate; /* 讓格子之間有些微空隙，更具手工感 */
+      border-collapse: separate;
       border-spacing: 3px; 
       background: transparent;
       table-layout: fixed;
     }
     .calendar-table th, .calendar-table td {
-      border: 1.5px solid #e2dacb; /* 仿鉛筆手繪粗細 */
+      border: 1.5px solid #e2dacb;
       text-align: center;
       padding: 10px 4px;
       font-size: 13.5px;
-      border-radius: 8px; /* 輕微圓角 */
+      border-radius: 8px;
     }
     .calendar-table th {
       background-color: #f7f4eb;
@@ -78,7 +76,7 @@
       color: #6b7280;
     }
     
-    /* 時間方格互動效果 (手繪筆觸感) */
+    /* 時間方格互動效果 */
     .slot-cell {
       position: relative;
       cursor: pointer;
@@ -101,16 +99,16 @@
     /* 狀態顏色：溫慢、乾淨的莫蘭迪色系 */
     .slot-cell.available {
       background-color: #ffffff;
-      color: var(--secondary-color);
+      color: #b0a496;
       border: 1.5px solid #e2dacb;
     }
     .slot-cell.available:hover {
-      background-color: #f3f7f4; /* 極淡的植物綠，溫柔的選取感 */
+      background-color: #fdfaf5; /* 輕微乳白色，引導選取 */
       transform: translateY(-1px);
-      box-shadow: 0 2px 5px rgba(141, 174, 148, 0.15);
+      box-shadow: 0 2px 5px rgba(203, 199, 185, 0.2);
     }
     
-    /* 您的既有行程「忙碌」狀態 (柔焦溫暖) */
+    /* 發起人原先就忙碌（不可選） */
     .slot-cell.busy {
       background-color: var(--busy-color);
       color: #8c8576;
@@ -124,23 +122,23 @@
       font-weight: 400;
     }
     
-    /* 被主管勾選後的狀態 (手繪感的鼠尾草綠) */
+    /* 主管自己勾選「不克出席」後的狀態 (暖調莫蘭迪粉橘) */
     .slot-cell.selected {
       background-color: var(--secondary-color) !important;
       color: #ffffff !important;
-      border: 2px solid #6c8a73 !important;
+      border: 2px solid #b07d65 !important;
       font-weight: 700;
       transform: scale(0.97);
     }
     .slot-cell.selected:hover {
-      background-color: #7a9c81 !important;
+      background-color: #c98c75 !important;
     }
     
     /* 文青風底線輸入框 */
     input[type="text"] {
       background-color: transparent;
       border: none;
-      border-bottom: 2px dashed #cfc7b9; /* 虛線底線，更像手工筆記本 */
+      border-bottom: 2px dashed #cfc7b9;
       border-radius: 0;
       padding: 10px 4px;
       font-size: 16px;
@@ -153,7 +151,7 @@
       background-color: rgba(247, 244, 235, 0.3);
     }
 
-    /* 文青手繪風按鈕 - 修正字體並提升質感 */
+    /* 文青手繪風按鈕 */
     .btn-hand-drawn {
       background-color: #ffffff;
       color: var(--primary-color);
@@ -163,7 +161,7 @@
       letter-spacing: 0.1em;
       font-size: 16px;
       padding: 12px 32px;
-      border-radius: 40px 35px 40px 38px; /* 有機感圓角按鈕 */
+      border-radius: 40px 35px 40px 38px;
       cursor: pointer;
       box-shadow: 4px 4px 0px rgba(85, 114, 143, 0.15);
       transition: all 0.25s ease;
@@ -179,7 +177,6 @@
       box-shadow: 2px 2px 0px rgba(85, 114, 143, 0.15);
     }
 
-    /* 手機版自適應滾動 */
     .table-container {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -192,17 +189,16 @@
   <div class="max-w-5xl mx-auto hand-drawn-card p-6 sm:p-10 my-4">
     <!-- 頂部文青風標題區 -->
     <div class="mb-10 text-center relative">
-      <!-- 簡約手繪小圖示 (咖啡杯與日曆) -->
-      <span class="text-4xl block mb-3 animate-bounce" style="animation-duration: 3s;">☕️ 📅</span>
-      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-wider mb-4 text-[#3e566e]">下週開會時間意願調查</h1>
-      <p class="text-gray-600 mt-2 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-        親愛的主管們，這是一份溫暖的時間協調。
-        請勾選您下週 <span class="font-bold border-b border-dashed border-[#55728f] text-[#3e566e] pb-0.5">6/22 (一) - 6/26 (五)</span> 方便撥冗出席的時段。
-        灰色「忙碌」為發起人已有行程，請於白色空檔中多選您方便的時間，系統將自動尋找大家的交集。
+      <span class="text-4xl block mb-3 animate-bounce" style="animation-duration: 3s;">✏️ 📅</span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-wider mb-4 text-[#3e566e]">下週開會【不克出席】時間登記</h1>
+      <p class="text-gray-600 mt-2 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
+        親愛的主管們，為了更有效率地找出大家的空檔，本調查改採<span class="font-bold text-[#c98c75] border-b border-dashed border-[#c98c75] pb-0.5">「排除法」</span>：<br>
+        請在下方網格中，勾選您下週 <span class="font-bold text-[#3e566e]">6/22 (一) - 6/26 (五)</span> <span class="font-bold text-[#c98c75]">「絕對無法出席」或「已有行程」</span>的時段。<br>
+        <span class="text-sm block mt-2 text-gray-500">（灰色為發起人已有行程，無須重複勾選；白色時段代表您有空，留白不勾選即可）</span>
       </p>
     </div>
 
-    <!-- 模擬載入狀態 (文青簡約風) -->
+    <!-- 模擬載入狀態 -->
     <div id="loading" class="flex flex-col items-center justify-center p-16 text-gray-500">
       <span class="text-4xl animate-pulse mb-4">🌱</span>
       <p class="text-base font-medium tracking-widest">正在悄悄載入發起人的行事曆行程與空檔時段...</p>
@@ -210,7 +206,7 @@
 
     <!-- 調查表單本體 -->
     <form id="scheduleForm" class="hidden" onsubmit="submitForm(event)">
-      <!-- 個人資料輸入區 (紙上書寫感) -->
+      <!-- 個人資料輸入區 -->
       <div class="mb-10 bg-[#fbfaf6] p-6 rounded-2xl border border-[#e8e2d5] shadow-inner">
         <label for="userName" class="block text-gray-700 font-bold text-lg mb-3 font-literary">
           <span class="text-red-400 mr-1">*</span> 您的單位與職稱姓名：
@@ -219,8 +215,15 @@
           <input type="text" id="userName" required 
                  class="w-full max-w-lg" 
                  placeholder="例如：研發處 林處長">
-          <div class="text-sm text-gray-500 bg-white px-4 py-2 rounded-lg border border-[#e2decb] flex items-center gap-2">
-            <span>✏️ 提示：本調查採複選，選越多時段越容易湊成會議。</span>
+          <div class="text-xs sm:text-sm text-gray-500 bg-white px-4 py-3 rounded-lg border border-[#e2decb] shadow-sm flex flex-col gap-1">
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded bg-white border border-[#e2dacb] inline-block"></span>
+              <span>白色「 。」：代表您這時段**可以開會** (留空)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded bg-[#db9d8a] inline-block"></span>
+              <span>粉橘「 ✖」：代表您這時段**忙碌/無法出席**</span>
+            </div>
           </div>
         </div>
       </div>
@@ -247,10 +250,10 @@
       <!-- 送出按鈕 -->
       <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-gray-100 pt-8">
         <span class="text-sm text-gray-500 flex items-center gap-2">
-          <span>💡</span> 勾選完成後，請點擊右側按鈕以送出您的時間意願。
+          <span>💡</span> 標記好所有「無法出席」的紅格後，請點擊右側按鈕送出。
         </span>
         <button type="submit" class="w-full sm:w-auto btn-hand-drawn">
-          <span>送出時間回覆</span>
+          <span>送出不克出席登記</span>
           <span>✉️</span>
         </button>
       </div>
@@ -261,15 +264,15 @@
       <div class="w-20 h-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-green-200">
         <span class="text-4xl">✓</span>
       </div>
-      <h2 class="text-2xl font-bold text-gray-800 mb-3 font-literary">提交成功！感謝您的撥冗填寫</h2>
-      <p class="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">您的可用時段已被溫柔地記錄。待所有主管填寫完畢，發起人將會盡快通知會議定案時間，祝您有美好的一天。</p>
+      <h2 class="text-2xl font-bold text-gray-800 mb-3 font-literary">送出成功！感謝您的配合</h2>
+      <p class="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">您不克出席的忙碌時段已成功被記錄。系統將自動為發起人避開這些時間，找出大家的最佳交集！祝您有美好的一天。</p>
       <button type="button" onclick="resetPreview()" class="text-[#55728f] hover:text-[#3e566e] font-semibold underline text-sm transition-colors">
         重新填寫（測試預覽）
       </button>
     </div>
 
     <!-- 底部手繪花草插圖 (SVG base64) -->
-    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHview0aPSI5NSIgaGVpZ2h0PSI4NCIgdmlld0JveD0iMCAwIDk1IDg0Ij48cGF0aCBkPSiTTI4LjMsODBDMjIuMSw4MCwxNC4xLDc0LjksMTEuOSw2OS4zQzkuNCw2Mi43LDE0LjgsNTUsMjIsNTUuMmM4LjUsMC4yLDE0LjUsOC4yLDE0LjYsMTYuN0MzNi43LDc2LjcsMzMuNyw4MCwyOC4zLDgwek0yMS44LDU4LjdDMTguMSw1OC43LDEzLjksNjQsMTYuMSw2OS40QzE3LjksNzQuNCwyMyw3Ny44LDI3LjksNzcuOEMzMS40LDc3LjgsMzMuNSw3NSwzMy41LDcwLjVDMzMuNSw2NCwyNSw1OC43LDIxLjgsNTguN3pNMzYuOCw4MS4zQzMwLjMsODEuMywyNC43LDc3LjQsMjIuNSw3MS41QzE5LjksNjQuNywyNC42LDU3LDMyLjMsNTcuMkM0MC45LDU3LjMsNDcuNyw2NS44LDQ3LjgsNzUu2M0Ny45LDgwLjcsNDQuNyw4MS4zLDM2LjgsODEuM3pNMzIuNSw2MC45QzI4LjgsNjAuOSwyNS4zLDY2LjEsMjcuNiw3MS40Qz5LHN2Zz4=" alt="裝飾花草" class="decoration-plant">
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHview0aPSI5NSIgaGVpZ2h0PSI4NCIgdmlld0JveD0iMCAwIDk1IDg0Ij48cGF0aCBkPSiTTI4LjMsODBDMjIuMSw4MCwxNC4xLDc0LjksMTEuOSw2OS4zQzkuNCw2Mi43LDE0LjgsNTUsMjIsNTUuMmM4LjUsMC4yLDE0LjUsOC4yLDE0LjYsMTYuN0MzNi43LDc2LjcsMzMuNyw4MCwyOC4zLDgwek0yMS44LDU4LjdDMTguMSw1OC43LDEzLjksNjQsMTYuMSw2OS40QzE3LjksNzQuNCwyMyw3Ny44LDI3LjksNz通體長度..." alt="裝飾花草" class="decoration-plant">
   </div>
 
   <script>
@@ -329,21 +332,19 @@
       }
     };
 
-    // 自動環境偵測：若在 GAS 環境下，會自動與 API 對接；若在網頁編輯器預覽，會跑 Mock 數據！
+    // 環境判斷：GAS 伺服器 or 本地預覽
     window.onload = function() {
       if (typeof google !== 'undefined' && google.script && google.script.run) {
-        // 真實 GAS 雲端環境
         google.script.run
           .withSuccessHandler(renderCalendar)
           .withFailureHandler(function(err) {
-            alert("載入失敗: " + err.message);
+            console.error("載入失敗: " + err.message);
           })
           .getAvailableSlots();
       } else {
-        // 本地 Preview / 編輯器預覽環境
         setTimeout(function() {
           renderCalendar(mockScheduleData);
-        }, 1000);
+        }, 800);
       }
     };
 
@@ -363,7 +364,7 @@
         tdTime.innerText = slot;
         tr.appendChild(tdTime);
         
-        // 週一至週五
+        // 週一至週五格子
         data.days.forEach(function(day) {
           var td = document.createElement('td');
           var slotInfo = data.scheduleData[day][slot];
@@ -394,7 +395,7 @@
         cell.classList.add('selected');
         cell.querySelector('.slot-label').innerHTML = `
           <input type="checkbox" id="${checkbox.id}" name="slots" value="${checkbox.value}" checked onclick="toggleCell(this)">
-          ✓
+          ✖
         `;
       } else {
         cell.classList.remove('selected');
@@ -414,13 +415,8 @@
       checkboxes.forEach(function(cb) {
         selectedSlots.push(cb.value);
       });
-      
-      if (selectedSlots.length === 0) {
-        alert('請溫柔地挑選至少一個您方便的空閒時段再送出唷！');
-        return;
-      }
 
-      // 如果在 GAS 雲端環境
+      // 如果在 GAS 正式環境
       if (typeof google !== 'undefined' && google.script && google.script.run) {
         document.getElementById('scheduleForm').style.display = 'none';
         document.getElementById('loading').style.display = 'flex';
@@ -437,7 +433,7 @@
           })
           .processSubmission(userName, selectedSlots);
       } else {
-        // 本地模擬送出
+        // 本地預覽測試
         document.getElementById('scheduleForm').style.display = 'none';
         document.getElementById('successState').style.display = 'block';
       }
